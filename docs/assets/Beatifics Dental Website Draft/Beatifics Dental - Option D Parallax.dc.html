@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F3F6FB;color:#0A1F3C;font-family:Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#2457C5;text-decoration:none}
+a:hover{color:#1A44A0}
+input,select,textarea,button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#F3F6FB;overflow-x:clip">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:40;padding:16px clamp(16px,3vw,32px)">
+  <div style="max-width:1320px;margin:0 auto;padding:10px 10px 10px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:rgba(255,255,255,0.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-radius:20px;border:1px solid rgba(255,255,255,0.6);box-shadow:0 10px 30px -18px rgba(10,31,60,0.35)">
+    <a href="#top" aria-label="Beatifics Dental Clinic home" style="display:flex;align-items:center"><img src="assets/wordmark-smooth-blue.png" alt="Beatifics" style="height:30px;width:auto;display:block"></img></a>
+    <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:14.5px;font-weight:500">
+      <a href="#services" style="color:#33465F;padding:10px 14px;border-radius:12px" style-hover="background:#EAF0FA;color:#2457C5">Services</a>
+      <a href="#about" style="color:#33465F;padding:10px 14px;border-radius:12px" style-hover="background:#EAF0FA;color:#2457C5">Our Dentist</a>
+      <a href="#visit" style="color:#33465F;padding:10px 14px;border-radius:12px" style-hover="background:#EAF0FA;color:#2457C5">Your Visit</a>
+      <a href="#book" style="background:#0A1F3C;color:#FFFFFF;padding:11px 18px;border-radius:12px;transition:background .2s" style-hover="background:#2457C5;color:#FFFFFF">Book a visit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section data-screen-label="Hero" style="position:relative;height:100vh;min-height:640px;overflow:hidden;background:#0A1F3C">
+  <div data-speed="0.45" data-zoom="" style="position:absolute;left:0;right:0;top:-12%;height:124%;will-change:transform">
+    <image-slot id="d-hero" src="assets/hero-wide.png" shape="rect" placeholder="Full-bleed hero photo"></image-slot>
+  </div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,31,60,0.15) 0%,rgba(10,31,60,0.1) 35%,rgba(10,31,60,0.82) 100%);pointer-events:none"></div>
+  <div data-fade="" style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,4vw,56px) clamp(40px,7vh,80px);pointer-events:none;will-change:transform,opacity">
+    <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:26px">
+      <span style="align-self:flex-start;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.25);color:#FFFFFF;padding:9px 16px;border-radius:999px;font-size:13.5px;font-weight:500">
+        <span style="width:8px;height:8px;border-radius:50%;background:#7FB2FF"></span>{{ openLabel }} · {{ openDetail }}
+      </span>
+      <h1 style="margin:0;font-family:Sora,sans-serif;font-weight:300;font-size:clamp(48px,8.4vw,128px);line-height:0.95;letter-spacing:-0.045em;color:#FFFFFF;max-width:1100px;text-wrap:balance">Gentle care for <span style="font-weight:500">beatific</span> smiles.</h1>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+        <p style="margin:0;font-size:clamp(16px,1.3vw,19px);line-height:1.6;color:#DCE6F5;max-width:460px;text-wrap:pretty">Check-ups, cleanings, restorations and cosmetic treatments for adults and children, in Tunasan, Muntinlupa.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;pointer-events:auto">
+          <a href="#book" style="background:#FFFFFF;color:#0A1F3C;padding:17px 28px;border-radius:14px;font-weight:600;font-size:16px;transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:#EAF0FA;color:#0A1F3C">Book an appointment</a>
+          <a href="tel:+63287759896" style="background:rgba(255,255,255,0.12);color:#FFFFFF;padding:17px 24px;border-radius:14px;font-weight:600;font-size:16px;border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)" style-hover="background:rgba(255,255,255,0.22);color:#FFFFFF">(02) 8775 9896</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Marquee" style="padding:clamp(56px,8vw,104px) 0;overflow:hidden;background:#F3F6FB">
+  <div data-marquee="-0.35" style="display:flex;gap:56px;white-space:nowrap;font-family:Sora,sans-serif;font-weight:300;font-size:clamp(56px,9vw,140px);letter-spacing:-0.04em;line-height:1;color:#0A1F3C;will-change:transform">
+    <span>Check-ups</span><span style="color:#2457C5">·</span><span>Fillings</span><span style="color:#2457C5">·</span><span>Root canals</span><span style="color:#2457C5">·</span><span>Crowns</span><span style="color:#2457C5">·</span><span>Braces</span><span style="color:#2457C5">·</span><span>Kids</span>
+  </div>
+  <div data-marquee="0.25" style="display:flex;gap:56px;white-space:nowrap;font-family:Sora,sans-serif;font-weight:500;font-size:clamp(56px,9vw,140px);letter-spacing:-0.04em;line-height:1.1;color:transparent;-webkit-text-stroke:1.5px #A9C1E8;margin-left:-40vw;will-change:transform">
+    <span>Gentle care</span><span>·</span><span>Whole family</span><span>·</span><span>Clear answers</span><span>·</span><span>Beatific smiles</span>
+  </div>
+</section>
+
+<section id="services" data-screen-label="Services" style="max-width:1320px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,48px) clamp(80px,10vw,140px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(32px,5vw,80px);align-items:start">
+  <div style="position:sticky;top:120px;display:flex;flex-direction:column;gap:20px">
+    <span style="font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#2457C5">Services</span>
+    <h2 style="margin:0;font-family:Sora,sans-serif;font-weight:400;font-size:clamp(34px,4vw,56px);line-height:1.02;letter-spacing:-0.035em;color:#0A1F3C;text-wrap:balance">Everything your family's smiles need, under one roof.</h2>
+    <p style="margin:0;font-size:16.5px;line-height:1.6;color:#4B5D75;max-width:400px">Not sure what you need? Start with a consultation and we'll walk you through your options.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:40px">
+    <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+      <div style="{{ s.wrap }}">
+        <div style="background:#FFFFFF;border-radius:26px;padding:clamp(28px,3vw,40px);min-height:220px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;border:1px solid #E1E9F5;box-shadow:0 -12px 40px -24px rgba(10,31,60,0.25)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+            <h3 style="margin:0;font-family:Sora,sans-serif;font-weight:400;font-size:clamp(24px,2.2vw,30px);letter-spacing:-0.025em;color:#0A1F3C">{{ s.title }}</h3>
+            <span style="font-family:Sora,sans-serif;font-size:14px;font-weight:500;color:#2457C5;background:#EAF0FA;padding:6px 12px;border-radius:999px">{{ s.num }}</span>
+          </div>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#4B5D75;max-width:460px;text-wrap:pretty">{{ s.desc }}</p>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="about" data-screen-label="Our Dentist" style="background:#0A1F3C;color:#FFFFFF;position:relative;overflow:hidden">
+  <div data-speed="-0.25" style="position:absolute;right:-6vw;top:8%;font-family:Sora,sans-serif;font-weight:500;font-size:clamp(140px,22vw,340px);letter-spacing:-0.06em;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(127,178,255,0.18);pointer-events:none;white-space:nowrap">Smile</div>
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(88px,11vw,160px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(40px,7vw,112px);align-items:center;position:relative">
+    <div style="aspect-ratio:4/5;border-radius:28px;overflow:hidden;position:relative;max-width:520px;width:100%">
+      <div data-speed="0.18" style="position:absolute;left:0;right:0;top:-10%;height:120%;will-change:transform">
+        <image-slot id="dentist-portrait" src="assets/dentist-portrait.png" shape="rect" placeholder="Portrait: Dr. Jessica B. Vinuya"></image-slot>
+      </div>
+    </div>
+    <div data-speed="-0.08" style="display:flex;flex-direction:column;gap:30px;will-change:transform">
+      <span style="font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#7FB2FF">Meet your dentist</span>
+      <blockquote style="margin:0;font-family:Sora,sans-serif;font-weight:300;font-size:clamp(32px,3.8vw,54px);line-height:1.08;letter-spacing:-0.035em;color:#FFFFFF;text-wrap:balance">“We’re called to create Beatific Smiles.”</blockquote>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:18px;font-weight:600;color:#FFFFFF">Dr. Jessica B. Vinuya, DMD</span>
+        <span style="font-size:15px;color:#A9BEDC">Dentist, Beatifics Dental Clinic</span>
+      </div>
+      <p style="margin:0;font-size:17px;line-height:1.7;color:#C9D6EA;max-width:500px;text-wrap:pretty">Every visit starts with listening. We explain what we see, what we recommend and why, so you can make decisions about your care with confidence and without pressure.</p>
+    </div>
+  </div>
+</section>
+
+<section id="visit" data-screen-label="Your Visit" data-hscroll="" style="position:relative;height:340vh;background:#F3F6FB">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,4vh,48px)">
+    <div style="max-width:1320px;width:100%;margin:0 auto;padding:0 clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#2457C5">Your first visit</span>
+        <h2 style="margin:0;font-family:Sora,sans-serif;font-weight:400;font-size:clamp(32px,3.8vw,54px);line-height:1.02;letter-spacing:-0.035em;color:#0A1F3C;max-width:640px;text-wrap:balance">Unhurried, clear and comfortable.</h2>
+      </div>
+      <div style="width:200px;height:3px;border-radius:3px;background:#DCE5F3;overflow:hidden"><div data-hprogress="" style="height:100%;width:100%;background:#2457C5;transform-origin:left;transform:scaleX(0)"></div></div>
+    </div>
+    <div data-htrack="" style="display:flex;gap:20px;padding:0 clamp(20px,4vw,48px);will-change:transform">
+      <div style="flex:0 0 auto;width:min(78vw,420px);height:min(56vh,480px);border-radius:26px;overflow:hidden;position:relative">
+        <image-slot id="clinic-exterior" src="assets/reception.png" shape="rect" placeholder="Reception photo"></image-slot>
+      </div>
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div style="flex:0 0 auto;width:min(78vw,400px);height:min(56vh,480px);border-radius:26px;background:#FFFFFF;border:1px solid #E1E9F5;padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between">
+          <span style="font-family:Sora,sans-serif;font-weight:300;font-size:clamp(64px,7vw,96px);letter-spacing:-0.05em;line-height:1;color:#2457C5">{{ st.num }}</span>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:Sora,sans-serif;font-size:24px;font-weight:500;letter-spacing:-0.02em;color:#0A1F3C">{{ st.title }}</span>
+            <span style="font-size:16px;line-height:1.6;color:#4B5D75;text-wrap:pretty">{{ st.desc }}</span>
+          </div>
+        </div>
+      </sc-for>
+      <div style="flex:0 0 auto;width:min(78vw,400px);height:min(56vh,480px);border-radius:26px;background:#2457C5;padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;color:#FFFFFF">
+        <span style="font-family:Sora,sans-serif;font-weight:300;font-size:clamp(34px,3.4vw,46px);line-height:1.05;letter-spacing:-0.035em">Ready when you are.</span>
+        <a href="#book" style="align-self:flex-start;background:#FFFFFF;color:#0A1F3C;padding:16px 24px;border-radius:14px;font-weight:600" style-hover="color:#2457C5">Book an appointment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book" data-screen-label="Book" style="background:#0A1F3C;color:#FFFFFF;border-radius:36px 36px 0 0;position:relative;z-index:2">
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(80px,10vw,140px) clamp(20px,4vw,48px) clamp(56px,7vw,96px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,96px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#7FB2FF">Book an appointment</span>
+      <h2 style="margin:0;font-family:Sora,sans-serif;font-weight:300;font-size:clamp(38px,4.6vw,68px);line-height:1;letter-spacing:-0.04em;color:#FFFFFF;text-wrap:balance">Request a time that suits you.</h2>
+      <p style="margin:0;font-size:17px;line-height:1.65;color:#C9D6EA;max-width:440px">Send a request and our team will call or message you to confirm. For dental pain or urgent concerns, please call the clinic directly.</p>
+      <div id="contact" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;margin-top:20px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.12)">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ hours }}" as="h" hint-placeholder-count="7">
+            <div style="{{ h.style }}"><span>{{ h.day }}</span><span>{{ h.time }}</span></div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:15px;color:#C9D6EA;line-height:1.5">
+          <span style="color:#FFFFFF;font-weight:500">0200 E National Highway, Tunasan, Muntinlupa City</span>
+          <a href="tel:+63287759896" style="color:#7FB2FF;font-weight:600">(02) 8775 9896</a>
+          <a href="https://maps.app.goo.gl/J59Mw1iJoe874Bd46" target="_blank" style="color:#7FB2FF;font-weight:600">Get directions</a>
+          <div style="display:flex;gap:16px"><a href="https://www.facebook.com/BeatificsDentalClinic/" target="_blank" style="color:#7FB2FF;font-weight:600">Facebook</a><a href="https://www.instagram.com/beatificsdental/" target="_blank" style="color:#7FB2FF;font-weight:600">Instagram</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:28px;padding:clamp(28px,4vw,44px);color:#0A1F3C">
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:18px">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:#33465F">Full name
+            <input required="" name="name" placeholder="Juan dela Cruz" style="height:52px;border-radius:12px;border:1px solid #D6E0EF;background:#F3F6FB;padding:0 16px;font-size:16px;color:#0A1F3C;outline:none;transition:border-color .2s,background .2s" style-focus="border-color:#2457C5;background:#FFFFFF"></input>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:#33465F">Mobile number
+            <input required="" name="phone" type="tel" placeholder="09XX XXX XXXX" style="height:52px;border-radius:12px;border:1px solid #D6E0EF;background:#F3F6FB;padding:0 16px;font-size:16px;color:#0A1F3C;outline:none;transition:border-color .2s,background .2s" style-focus="border-color:#2457C5;background:#FFFFFF"></input>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:#33465F">Reason for visit
+            <select name="service" style="height:52px;border-radius:12px;border:1px solid #D6E0EF;background:#F3F6FB;padding:0 14px;font-size:16px;color:#0A1F3C;outline:none">
+              <sc-for list="{{ serviceOptions }}" as="o" hint-placeholder-count="6"><option value="{{ o }}">{{ o }}</option></sc-for>
+            </select>
+          </label>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:600;color:#33465F">Preferred day</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+                <button type="button" onClick="{{ d.pick }}" style="{{ d.style }}">{{ d.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <button type="submit" style="height:56px;border:none;border-radius:14px;background:#2457C5;color:#FFFFFF;font-size:16px;font-weight:600;cursor:pointer;margin-top:6px;transition:background .2s,transform .2s" style-hover="background:#1A44A0;transform:translateY(-1px)">Request appointment</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;padding:24px 0">
+          <span style="width:52px;height:52px;border-radius:16px;background:#EAF0FA;color:#2457C5;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700">✓</span>
+          <h3 style="margin:0;font-family:Sora,sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.03em;color:#0A1F3C">Thank you, {{ firstName }}.</h3>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#4B5D75">We've received your request for {{ chosenDay }}. Our team will contact you shortly to confirm your appointment time.</p>
+          <button type="button" onClick="{{ reset }}" style="background:none;border:1px solid #D6E0EF;border-radius:12px;padding:12px 20px;color:#2457C5;font-size:15px;font-weight:600;cursor:pointer">Make another request</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  <div style="max-width:1320px;margin:0 auto;padding:24px clamp(20px,4vw,48px) 32px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:#8FA3C2;border-top:1px solid rgba(255,255,255,0.08)">
+    <span>© 2026 Beatifics Dental Clinic, Muntinlupa City</span>
+    <a href="#top" style="color:#8FA3C2" style-hover="color:#FFFFFF">Back to top ↑</a>
+  </div>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;intensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1.6,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { submitted: false, day: 'Mon', firstName: '' };
+
+  componentDidMount() {
+    this.reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.ticking = false;
+    this.onScroll = () => { if (!this.ticking) { this.ticking = true; requestAnimationFrame(() => { this.ticking = false; this.update(); }); } };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.update();
+    setTimeout(() => this.update(), 400);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onScroll); }
+
+  update() {
+    const k = this.reduce ? 0 : (this.props.intensity ?? 1);
+    const vh = window.innerHeight, y = window.scrollY;
+    document.querySelectorAll('[data-speed]').forEach(el => {
+      const s = parseFloat(el.getAttribute('data-speed')) * k;
+      const host = el.parentElement.getBoundingClientRect();
+      const off = (host.top + host.height / 2 - vh / 2);
+      const zoom = el.hasAttribute('data-zoom') ? ' scale(' + (1 + Math.min(y / vh, 1) * 0.12 * k) + ')' : '';
+      el.style.transform = 'translate3d(0,' + (-off * s).toFixed(1) + 'px,0)' + zoom;
+    });
+    document.querySelectorAll('[data-fade]').forEach(el => {
+      const p = Math.min(Math.max(y / (vh * 0.7), 0), 1);
+      el.style.opacity = String(1 - p * (k ? 1 : 0));
+      el.style.transform = 'translate3d(0,' + (-y * 0.3 * k).toFixed(1) + 'px,0)';
+    });
+    document.querySelectorAll('[data-marquee]').forEach(el => {
+      const s = parseFloat(el.getAttribute('data-marquee'));
+      const r = el.getBoundingClientRect();
+      el.style.transform = 'translate3d(' + ((r.top - vh) * s * (k || 0.0001) * 1.2).toFixed(1) + 'px,0,0)';
+    });
+    document.querySelectorAll('[data-hscroll]').forEach(sec => {
+      const track = sec.querySelector('[data-htrack]'), bar = sec.querySelector('[data-hprogress]');
+      if (!track) return;
+      const r = sec.getBoundingClientRect();
+      const total = r.height - vh;
+      const p = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
+      const dist = Math.max(track.scrollWidth - window.innerWidth, 0);
+      track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
+      if (bar) bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+    });
+  }
+
+  renderVals() {
+    const css = s => Object.fromEntries(s.split(';').filter(Boolean).map(p => { const [a, ...v] = p.split(':'); return [a.trim().replace(/-([a-z])/g, (_, c) => c.toUpperCase()), v.join(':').trim()]; }));
+    const services = [
+      ['Check-ups & Cleaning', 'Routine exams, oral prophylaxis and preventive advice to keep teeth and gums healthy.'],
+      ['Fillings & Restorations', 'Tooth-coloured fillings that repair decay and blend naturally with your smile.'],
+      ['Root Canal Treatment', 'Careful, comfortable treatment to save an infected or damaged tooth.'],
+      ['Crowns, Bridges & Dentures', 'Durable, natural-looking options to restore missing or weakened teeth.'],
+      ['Braces & Orthodontics', 'Straighter teeth and a healthier bite for teens and adults.'],
+      ['Kids’ Dentistry', 'Patient, friendly care that helps children feel at ease from their very first visit.']
+    ].map(([title, desc], i) => ({ title, desc, num: '0' + (i + 1), wrap: css('position:sticky;top:' + (110 + i * 18) + 'px') }));
+    const hoursData = [['Mon', '9:00 – 5:00'], ['Tue', '9:00 – 5:00'], ['Wed', '9:00 – 5:00'], ['Thu', '9:00 – 5:00'], ['Fri', 'Closed'], ['Sat', '9:00 – 5:00'], ['Sun', 'Closed']];
+    const now = new Date(), ti = (now.getDay() + 6) % 7, hr = now.getHours();
+    const openNow = hoursData[ti][1] !== 'Closed' && hr >= 9 && hr < 17;
+    const dayNames = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Sat: 'Saturday' };
+    return {
+      services,
+      serviceOptions: ['Consultation / check-up', ...services.slice(0, 5).map(s => s.title), 'Kids’ dental visit', 'Dental pain / urgent concern'],
+      steps: [
+        { num: '01', title: 'Request a time', desc: 'Book online or call. We’ll confirm a slot that fits your schedule.' },
+        { num: '02', title: 'Talk it through', desc: 'Tell us your concerns, history and goals. We start by listening.' },
+        { num: '03', title: 'Thorough check-up', desc: 'A careful exam of teeth and gums, explained as we go.' },
+        { num: '04', title: 'Your care plan', desc: 'Clear recommendations, priorities and costs, with no pressure.' }
+      ],
+      hours: hoursData.map(([day, time], i) => ({ day, time, style: css('display:flex;justify-content:space-between;gap:16px;padding:6px 0;font-size:15px;' + (i === ti ? 'color:#FFFFFF;font-weight:600' : time === 'Closed' ? 'color:#6F84A5' : 'color:#C9D6EA')) })),
+      openLabel: openNow ? 'Open now' : 'Open Mon–Thu & Sat',
+      openDetail: openNow ? 'until 5:00 PM' : '9 AM – 5 PM',
+      days: Object.keys(dayNames).map(d => ({ label: d, pick: () => this.setState({ day: d }), style: css('height:44px;padding:0 18px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;' + (this.state.day === d ? 'background:#0A1F3C;color:#FFFFFF;border:1px solid #0A1F3C' : 'background:#F3F6FB;color:#33465F;border:1px solid #D6E0EF')) })),
+      submitted: this.state.submitted, notSubmitted: !this.state.submitted,
+      firstName: this.state.firstName, chosenDay: dayNames[this.state.day],
+      submit: e => { e.preventDefault(); const n = (new FormData(e.target).get('name') || '').toString().trim(); this.setState({ submitted: true, firstName: n.split(' ')[0] || 'there' }); },
+      reset: () => this.setState({ submitted: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

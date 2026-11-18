@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#FAFAF7;color:#1A2A30;font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1B4B5A;text-decoration:none}
+a:hover{color:#123744}
+input,select,textarea,button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#FAFAF7">
+
+<header style="position:sticky;top:0;z-index:20;background:rgba(250,250,247,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(26,42,48,0.06)">
+  <div style="max-width:1240px;margin:0 auto;padding:16px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <a href="#top" style="display:flex;align-items:center" aria-label="Beatifics Dental Clinic home"><img src="assets/wordmark-smooth-teal.png" alt="Beatifics" style="height:36px;width:auto;display:block"></img></a>
+    <nav style="display:flex;align-items:center;gap:clamp(16px,2.5vw,32px);flex-wrap:wrap;font-size:15px">
+      <a href="#services" style="color:#3B4C52" style-hover="color:#1B4B5A">Services</a>
+      <a href="#about" style="color:#3B4C52" style-hover="color:#1B4B5A">Our Dentist</a>
+      <a href="#visit" style="color:#3B4C52" style-hover="color:#1B4B5A">Your Visit</a>
+      <a href="#contact" style="color:#3B4C52" style-hover="color:#1B4B5A">Contact</a>
+      <a href="#book" style="background:#1B4B5A;color:#FAFAF7;padding:11px 20px;border-radius:999px;font-weight:500;transition:background .2s,transform .2s" style-hover="background:#123744;color:#FAFAF7;transform:translateY(-1px)">Book a visit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section data-screen-label="Hero" style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,4vw,48px) clamp(64px,8vw,112px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:28px">
+    <span style="align-self:flex-start;display:flex;align-items:center;gap:8px;background:#E1F0EF;color:#1B4B5A;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500">
+      <span style="width:6px;height:6px;border-radius:50%;background:#3E8E9A"></span>
+      Family dentistry in Tunasan, Muntinlupa
+    </span>
+    <h1 style="margin:0;font-family:Newsreader,serif;font-weight:300;font-size:clamp(44px,6vw,76px);line-height:1.02;letter-spacing:-0.02em;color:#14323D;text-wrap:balance">Gentle dental care for <em style="font-style:italic;color:#2A6878">beatific</em> smiles.</h1>
+    <p style="margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.6;color:#48595F;max-width:500px;text-wrap:pretty">Check-ups, cleanings, restorations and cosmetic treatments for adults and children, in a calm clinic on the National Highway.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="#book" style="background:#1B4B5A;color:#FAFAF7;padding:16px 28px;border-radius:999px;font-weight:500;font-size:16px;transition:background .2s,transform .2s,box-shadow .2s" style-hover="background:#123744;color:#FAFAF7;transform:translateY(-1px);box-shadow:0 10px 24px -10px rgba(27,75,90,0.5)">Book an appointment</a>
+      <a href="tel:+63287759896" style="background:#FFFFFF;color:#1B4B5A;padding:16px 28px;border-radius:999px;font-weight:500;font-size:16px;border:1px solid rgba(27,75,90,0.16);transition:border-color .2s" style-hover="border-color:#1B4B5A">Call (02) 8775 9896</a>
+    </div>
+  </div>
+  <div data-reveal="" style="position:relative">
+    <div style="aspect-ratio:4/5;border-radius:28px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(20,50,61,0.35)">
+      <image-slot id="hero-photo" src="assets/hero-clinic.png" shape="rect" placeholder="Hero photo: smiling patient or treatment room in natural light"></image-slot>
+    </div>
+    <div style="position:absolute;left:clamp(-12px,-2vw,-28px);bottom:32px;background:#FFFFFF;border-radius:20px;padding:18px 22px;box-shadow:0 18px 40px -18px rgba(20,50,61,0.3);display:flex;flex-direction:column;gap:4px;max-width:240px">
+      <span style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#5C6D73">{{ openLabel }}</span>
+      <span style="font-family:Newsreader,serif;font-size:22px;color:#14323D">{{ openDetail }}</span>
+    </div>
+  </div>
+</section>
+
+<section id="services" data-screen-label="Services" style="background:#FFFFFF;border-top:1px solid rgba(26,42,48,0.05);border-bottom:1px solid rgba(26,42,48,0.05)">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,120px) clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:56px">
+    <div data-reveal="" style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:620px">
+        <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#2A6878;font-weight:600">Services</span>
+        <h2 style="margin:0;font-family:Newsreader,serif;font-weight:300;font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-0.015em;color:#14323D;text-wrap:balance">Everything your family's smiles need, under one roof.</h2>
+      </div>
+      <p style="margin:0;max-width:360px;font-size:16px;line-height:1.6;color:#48595F">Not sure what you need? Start with a consultation and we'll walk you through your options.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+        <div data-reveal="" style="background:#FAFAF7;border-radius:22px;padding:32px;display:flex;flex-direction:column;gap:14px;border:1px solid rgba(26,42,48,0.05);transition:transform .25s ease,box-shadow .25s ease,background .25s" style-hover="transform:translateY(-3px);box-shadow:0 20px 40px -24px rgba(20,50,61,0.3);background:#FFFFFF">
+          <span style="width:44px;height:44px;border-radius:14px;background:#E1F0EF;color:#1B4B5A;display:flex;align-items:center;justify-content:center;font-family:Newsreader,serif;font-size:18px">{{ s.num }}</span>
+          <h3 style="margin:8px 0 0;font-family:Newsreader,serif;font-weight:400;font-size:25px;color:#14323D">{{ s.title }}</h3>
+          <p style="margin:0;font-size:15.5px;line-height:1.6;color:#48595F;text-wrap:pretty">{{ s.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="about" data-screen-label="Our Dentist" style="max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,120px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(40px,6vw,96px);align-items:center">
+  <div data-reveal="" style="aspect-ratio:1/1;border-radius:28px;overflow:hidden;background:#E1F0EF">
+    <image-slot id="dentist-portrait" src="assets/dentist-portrait.png" shape="rect" placeholder="Portrait: Dr. Jessica B. Vinuya"></image-slot>
+  </div>
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:28px">
+    <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#2A6878;font-weight:600">Meet your dentist</span>
+    <blockquote style="margin:0;font-family:Newsreader,serif;font-weight:300;font-style:italic;font-size:clamp(32px,3.6vw,46px);line-height:1.15;letter-spacing:-0.01em;color:#14323D;text-wrap:balance">“We’re called to create Beatific Smiles.”</blockquote>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:18px;font-weight:600;color:#14323D">Dr. Jessica B. Vinuya, DMD</span>
+      <span style="font-size:15px;color:#5C6D73">Dentist, Beatifics Dental Clinic</span>
+    </div>
+    <p style="margin:0;font-size:17px;line-height:1.7;color:#48595F;max-width:520px;text-wrap:pretty">Every visit starts with listening. We explain what we see, what we recommend and why, so you can make decisions about your care with confidence and without pressure.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:560px">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+        <div style="border-top:1px solid rgba(27,75,90,0.2);padding-top:14px;display:flex;flex-direction:column;gap:6px">
+          <span style="font-weight:600;font-size:15px;color:#14323D">{{ v.title }}</span>
+          <span style="font-size:14px;line-height:1.5;color:#5C6D73">{{ v.desc }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="visit" data-screen-label="Your Visit" style="padding:0 clamp(12px,2vw,24px)">
+  <div style="max-width:1288px;margin:0 auto;background:#1B4B5A;border-radius:32px;padding:clamp(56px,8vw,104px) clamp(24px,5vw,72px);display:flex;flex-direction:column;gap:56px;color:#F1F6F7">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px;max-width:640px">
+      <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#A6D6D6;font-weight:600">Your first visit</span>
+      <h2 style="margin:0;font-family:Newsreader,serif;font-weight:300;font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-0.015em;color:#FFFFFF;text-wrap:balance">Unhurried, clear and comfortable from start to finish.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:32px">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:14px;border-top:1px solid rgba(242,247,244,0.2);padding-top:24px">
+          <span style="font-family:Newsreader,serif;font-style:italic;font-size:30px;color:#A6D6D6">{{ st.num }}</span>
+          <span style="font-size:19px;font-weight:600;color:#FFFFFF">{{ st.title }}</span>
+          <span style="font-size:15.5px;line-height:1.6;color:#D0E3E6;text-wrap:pretty">{{ st.desc }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="book" data-screen-label="Book" style="max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,120px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:start">
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+    <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#2A6878;font-weight:600">Book an appointment</span>
+    <h2 style="margin:0;font-family:Newsreader,serif;font-weight:300;font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-0.015em;color:#14323D;text-wrap:balance">Request a time that suits you.</h2>
+    <p style="margin:0;font-size:17px;line-height:1.65;color:#48595F;max-width:440px">Send a request and our team will call or message you to confirm. For dental pain or urgent concerns, please call the clinic directly.</p>
+    <a href="tel:+63287759896" style="align-self:flex-start;display:flex;align-items:center;gap:10px;font-size:17px;font-weight:600;color:#1B4B5A;border-bottom:1px solid rgba(27,75,90,0.3);padding-bottom:4px" style-hover="border-color:#1B4B5A">(02) 8775 9896</a>
+  </div>
+  <div data-reveal="" style="background:#FFFFFF;border-radius:28px;padding:clamp(28px,4vw,44px);box-shadow:0 30px 60px -36px rgba(20,50,61,0.3);border:1px solid rgba(26,42,48,0.05)">
+    <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:500;color:#3B4C52">Full name
+            <input required="" name="name" placeholder="Juan dela Cruz" style="height:52px;border-radius:14px;border:1px solid rgba(26,42,48,0.14);background:#FAFAF7;padding:0 16px;font-size:16px;color:#1A2A30;outline:none;transition:border-color .2s,background .2s" style-focus="border-color:#2A6878;background:#FFFFFF"></input>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:500;color:#3B4C52">Mobile number
+            <input required="" name="phone" type="tel" placeholder="09XX XXX XXXX" style="height:52px;border-radius:14px;border:1px solid rgba(26,42,48,0.14);background:#FAFAF7;padding:0 16px;font-size:16px;color:#1A2A30;outline:none;transition:border-color .2s,background .2s" style-focus="border-color:#2A6878;background:#FFFFFF"></input>
+          </label>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:500;color:#3B4C52">Reason for visit
+          <select name="service" style="height:52px;border-radius:14px;border:1px solid rgba(26,42,48,0.14);background:#FAFAF7;padding:0 14px;font-size:16px;color:#1A2A30;outline:none" style-focus="border-color:#2A6878">
+            <sc-for list="{{ serviceOptions }}" as="o" hint-placeholder-count="6">
+              <option value="{{ o }}">{{ o }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:14px;font-weight:500;color:#3B4C52">Preferred day</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+              <button type="button" onClick="{{ d.pick }}" style="{{ d.style }}">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:500;color:#3B4C52">Anything we should know? <span style="font-weight:400;color:#78878C">Optional</span>
+          <textarea name="notes" rows="3" style="border-radius:14px;border:1px solid rgba(26,42,48,0.14);background:#FAFAF7;padding:14px 16px;font-size:16px;color:#1A2A30;outline:none;resize:vertical" style-focus="border-color:#2A6878;background:#FFFFFF"></textarea>
+        </label>
+        <button type="submit" style="height:56px;border:none;border-radius:999px;background:#1B4B5A;color:#FAFAF7;font-size:16px;font-weight:500;cursor:pointer;transition:background .2s,transform .2s" style-hover="background:#123744;transform:translateY(-1px)">Request appointment</button>
+      </form>
+    </sc-if>
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:16px;padding:24px 0;align-items:flex-start">
+        <span style="width:52px;height:52px;border-radius:50%;background:#E1F0EF;color:#1B4B5A;display:flex;align-items:center;justify-content:center;font-size:22px">✓</span>
+        <h3 style="margin:0;font-family:Newsreader,serif;font-weight:400;font-size:32px;color:#14323D">Thank you, {{ firstName }}.</h3>
+        <p style="margin:0;font-size:16.5px;line-height:1.6;color:#48595F">We've received your request for {{ chosenDay }}. Our team will contact you shortly to confirm your appointment time.</p>
+        <button type="button" onClick="{{ reset }}" style="margin-top:8px;background:none;border:1px solid rgba(27,75,90,0.2);border-radius:999px;padding:12px 22px;color:#1B4B5A;font-size:15px;font-weight:500;cursor:pointer" style-hover="border-color:#1B4B5A">Make another request</button>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<section id="contact" data-screen-label="Contact" style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px) clamp(72px,9vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+  <div data-reveal="" style="background:#FFFFFF;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:20px;border:1px solid rgba(26,42,48,0.05)">
+    <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#2A6878;font-weight:600">Clinic hours</span>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ hours }}" as="h" hint-placeholder-count="7">
+        <div style="{{ h.style }}">
+          <span>{{ h.day }}</span><span>{{ h.time }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div data-reveal="" style="background:#FFFFFF;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:24px;border:1px solid rgba(26,42,48,0.05)">
+    <span style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#2A6878;font-weight:600">Find us</span>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-family:Newsreader,serif;font-size:24px;line-height:1.25;color:#14323D">0200 E National Highway, Tunasan</span>
+      <span style="font-size:15.5px;color:#48595F">Muntinlupa City, 1773 Metro Manila</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:15.5px">
+      <a href="tel:+63287759896" style="color:#1B4B5A;font-weight:500">(02) 8775 9896</a>
+      <a href="https://www.facebook.com/BeatificsDentalClinic/" target="_blank" style="color:#1B4B5A;font-weight:500">Facebook</a>
+      <a href="https://www.instagram.com/beatificsdental/" target="_blank" style="color:#1B4B5A;font-weight:500">Instagram</a>
+    </div>
+    <a href="https://maps.app.goo.gl/J59Mw1iJoe874Bd46" target="_blank" style="margin-top:auto;align-self:flex-start;background:#E1F0EF;color:#1B4B5A;padding:12px 20px;border-radius:999px;font-size:15px;font-weight:500;transition:background .2s" style-hover="background:#CDE6E5;color:#1B4B5A">Get directions</a>
+  </div>
+  <div data-reveal="" style="border-radius:24px;overflow:hidden;min-height:320px;position:relative">
+    <image-slot id="clinic-exterior" src="assets/reception.png" shape="rect" placeholder="Clinic exterior or reception photo"></image-slot>
+  </div>
+</section>
+
+</main>
+
+<footer style="border-top:1px solid rgba(26,42,48,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:32px clamp(20px,4vw,48px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:#5C6D73">
+    <span>© 2026 Beatifics Dental Clinic, Muntinlupa City</span>
+    <a href="#top" style="color:#5C6D73" style-hover="color:#1B4B5A">Back to top ↑</a>
+  </div>
+</footer>
+
+<sc-if value="{{ showStickyBook }}" hint-placeholder-val="{{ false }}">
+  <a href="#book" style="position:fixed;right:24px;bottom:24px;z-index:30;background:#1B4B5A;color:#FAFAF7;padding:15px 24px;border-radius:999px;font-weight:500;font-size:15px;box-shadow:0 16px 32px -12px rgba(20,50,61,0.5);transition:transform .2s" style-hover="transform:translateY(-2px);color:#FAFAF7">Book a visit</a>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;animations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behaviour&quot;},&quot;stickyBook&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behaviour&quot;}}">
+class Component extends DCLogic {
+  state = { submitted: false, day: 'Mon', firstName: '' };
+
+  componentDidMount() {
+    this.check = () => {
+      const lim = window.innerHeight - 40;
+      document.querySelectorAll('[data-rv="hidden"]').forEach(el => {
+        if (el.getBoundingClientRect().top < lim) {
+          el.setAttribute('data-rv', 'shown');
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+      });
+    };
+    window.addEventListener('scroll', this.check, { passive: true });
+    window.addEventListener('resize', this.check);
+    setTimeout(() => this.setupReveal(), 300);
+  }
+  componentDidUpdate() { if (this.check) this.setupReveal(); }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.check);
+    window.removeEventListener('resize', this.check);
+  }
+
+  setupReveal() {
+    if (this.props.animations === false) return;
+    document.querySelectorAll('[data-reveal]:not([data-rv])').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (el.closest('[data-screen-label="Hero"]') || r.height === 0 || r.top < window.innerHeight) {
+        el.setAttribute('data-rv', 'shown');
+        return;
+      }
+      el.setAttribute('data-rv', 'hidden');
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1)';
+    });
+    requestAnimationFrame(this.check);
+  }
+
+  renderVals() {
+    const services = [
+      { num: '01', title: 'Check-ups & Cleaning', desc: 'Routine exams, oral prophylaxis and preventive advice to keep teeth and gums healthy.' },
+      { num: '02', title: 'Fillings & Restorations', desc: 'Tooth-coloured fillings that repair decay and blend naturally with your smile.' },
+      { num: '03', title: 'Root Canal Treatment', desc: 'Careful, comfortable treatment to save an infected or damaged tooth.' },
+      { num: '04', title: 'Crowns, Bridges & Dentures', desc: 'Durable, natural-looking options to restore missing or weakened teeth.' },
+      { num: '05', title: 'Braces & Orthodontics', desc: 'Straighter teeth and a healthier bite for teens and adults.' },
+      { num: '06', title: 'Kids’ Dentistry', desc: 'Patient, friendly care that helps children feel at ease from their very first visit.' }
+    ];
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Sat'];
+    const base = 'height:44px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;';
+    const toStyle = s => Object.fromEntries(s.split(';').filter(Boolean).map(p => { const [k, ...v] = p.split(':'); return [k.trim().replace(/-([a-z])/g, (_, c) => c.toUpperCase()), v.join(':').trim()]; }));
+
+    const hoursData = [
+      ['Monday', '9:00 AM – 5:00 PM'], ['Tuesday', '9:00 AM – 5:00 PM'], ['Wednesday', '9:00 AM – 5:00 PM'],
+      ['Thursday', '9:00 AM – 5:00 PM'], ['Friday', 'Closed'], ['Saturday', '9:00 AM – 5:00 PM'], ['Sunday', 'Closed']
+    ];
+    const now = new Date();
+    const todayIdx = (now.getDay() + 6) % 7;
+    const today = hoursData[todayIdx];
+    const isOpenDay = today[1] !== 'Closed';
+    const h = now.getHours();
+    const openNow = isOpenDay && h >= 9 && h < 17;
+
+    return {
+      services,
+      serviceOptions: ['Consultation / check-up', ...services.slice(0, 5).map(s => s.title), 'Kids’ dental visit', 'Dental pain / urgent concern'],
+      values: [
+        { title: 'Clear explanations', desc: 'Know your options and costs before treatment.' },
+        { title: 'Gentle approach', desc: 'Comfort-first care for nervous patients.' },
+        { title: 'Whole-family care', desc: 'One clinic for kids, parents and grandparents.' }
+      ],
+      steps: [
+        { num: '01', title: 'Request a time', desc: 'Book online or call. We’ll confirm a slot that fits your schedule.' },
+        { num: '02', title: 'Talk it through', desc: 'Tell us your concerns, history and goals. We start by listening.' },
+        { num: '03', title: 'Thorough check-up', desc: 'A careful exam of teeth and gums, explained as we go.' },
+        { num: '04', title: 'Your care plan', desc: 'Clear recommendations, priorities and costs, with no pressure.' }
+      ],
+      hours: hoursData.map(([day, time], i) => ({
+        day, time,
+        style: toStyle('display:flex;justify-content:space-between;gap:16px;padding:11px 0;font-size:15.5px;border-bottom:1px solid rgba(26,42,48,0.06);' + (i === todayIdx ? 'color:#1B4B5A;font-weight:600' : time === 'Closed' ? 'color:#88959A' : 'color:#3B4C52'))
+      })),
+      openLabel: openNow ? 'Open now' : 'Clinic hours',
+      openDetail: openNow ? 'Until 5:00 PM today' : 'Mon–Thu & Sat, 9–5',
+      days: days.map(d => ({
+        label: d,
+        pick: () => this.setState({ day: d }),
+        style: toStyle(base + (this.state.day === d
+          ? 'background:#1B4B5A;color:#FAFAF7;border:1px solid #1B4B5A'
+          : 'background:#FAFAF7;color:#3B4C52;border:1px solid rgba(26,42,48,0.14)'))
+      })),
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      firstName: this.state.firstName,
+      chosenDay: ({ Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Sat: 'Saturday' })[this.state.day],
+      submit: e => {
+        e.preventDefault();
+        const name = (new FormData(e.target).get('name') || '').toString().trim();
+        this.setState({ submitted: true, firstName: name.split(' ')[0] || 'there' });
+      },
+      reset: () => this.setState({ submitted: false }),
+      showStickyBook: this.props.stickyBook ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
