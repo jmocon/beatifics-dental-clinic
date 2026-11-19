@@ -1,6 +1,6 @@
 # Beatifics Dental Clinic — Website & Admin Portal
 
-Web app for **Beatifics Dental Clinic** (Dr. Jessica B. Vinuya, DMD — 0200 E National Highway, Tunasan, Muntinlupa City, 1773 Metro Manila; (02) 8775 9896).
+Web app for **Beatifics Dental Clinic** (Dr. Rebecca D. Vivo, DMD — 0200 E National Highway, Tunasan, Muntinlupa City, 1773 Metro Manila; (02) 8775 9896).
 
 Two parts:
 1. **Public website** (`/`) — the clinic's one-page site where patients **request appointments**.

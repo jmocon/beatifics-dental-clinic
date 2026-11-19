@@ -224,7 +224,7 @@ export function SitePage() {
         {/* ---------- Our Dentist ---------- */}
         <section id="about" className="about container section" aria-labelledby="about-title">
           <div className="about-photo" data-reveal>
-            <img src="/images/dentist-portrait.png" alt="Dr. Jessica B. Vinuya, DMD" loading="lazy" />
+            <img src="/images/dentist-portrait.png" alt="Dr. Rebecca D. Vivo, DMD" loading="lazy" />
           </div>
           <div className="about-copy" data-reveal>
             <span id="about-title" className="eyebrow">
@@ -232,7 +232,7 @@ export function SitePage() {
             </span>
             <blockquote className="about-quote">“We’re called to create Beatific Smiles.”</blockquote>
             <div className="about-name">
-              <span>Dr. Jessica B. Vinuya, DMD</span>
+              <span>Dr. Rebecca D. Vivo, DMD</span>
               <span>Dentist, Beatifics Dental Clinic</span>
             </div>
             <p className="about-text">

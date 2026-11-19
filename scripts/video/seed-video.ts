@@ -16,7 +16,7 @@ const db = openDb(defaultDbPath());
 const now = new Date();
 const today = manilaToday(now);
 const dentists = listDentists(db);
-const jessica = dentists.find((d) => d.name.includes('Jessica'))!;
+const vivo = dentists.find((d) => d.name.includes('Vivo'))!;
 const marco = dentists.find((d) => d.name.includes('Marco'))!;
 
 const NAMES = [
@@ -74,7 +74,7 @@ for (let d = addDays(today, -90); d < today; d = addDays(d, 1)) {
   const times = [...TIMES].sort(() => rand() - 0.5).slice(0, count);
   for (const time of times) {
     const i = n++;
-    const dentist = marco.workingDays.includes(weekdayOf(d)) && rand() < 0.45 ? marco : jessica;
+    const dentist = marco.workingDays.includes(weekdayOf(d)) && rand() < 0.45 ? marco : vivo;
     const r = rand();
     add({
       name: NAMES[i % NAMES.length],
@@ -90,11 +90,11 @@ for (let d = addDays(today, -90); d < today; d = addDays(d, 1)) {
   }
 }
 
-// Maria Santos (from seed-demo) is a regular of Dr. Jessica: staff type her number and the name fills in.
+// Maria Santos (from seed-demo) is a regular of Dr. Vivo: staff type her number and the name fills in.
 for (const back of [70, 25]) {
   let d = addDays(today, -back);
-  while (!isClinicDay(d) || !jessica.workingDays.includes(weekdayOf(d))) d = addDays(d, -1);
-  add({ name: 'Maria Santos', mobile: '09171234567', service: SERVICES[1], date: d, time: '16:00', dentistId: jessica.id, status: 'completed', online: true });
+  while (!isClinicDay(d) || !vivo.workingDays.includes(weekdayOf(d))) d = addDays(d, -1);
+  add({ name: 'Maria Santos', mobile: '09171234567', service: SERVICES[1], date: d, time: '16:00', dentistId: vivo.id, status: 'completed', online: true });
 }
 
 // ---- The next few clinic days: confirmed appointments so the calendar looks like a real week ----
@@ -102,17 +102,17 @@ const upcoming = upcomingClinicDays(6, now);
 const plan: Array<[number, string, number, Service, number?]> = [
   // [day index, time, dentist id, service, minutes]
   [0, '10:30', marco.id, SERVICES[4], 90],
-  [0, '13:00', jessica.id, SERVICES[2]],
+  [0, '13:00', vivo.id, SERVICES[2]],
   [0, '15:00', marco.id, SERVICES[1]],
-  [1, '10:30', jessica.id, SERVICES[2]],
+  [1, '10:30', vivo.id, SERVICES[2]],
   [1, '13:00', marco.id, SERVICES[3], 120],
-  [2, '09:00', jessica.id, SERVICES[1]],
+  [2, '09:00', vivo.id, SERVICES[1]],
   [2, '11:00', marco.id, SERVICES[5]],
-  [2, '15:00', jessica.id, SERVICES[0]],
-  [3, '13:00', jessica.id, SERVICES[2]],
-  [4, '09:30', jessica.id, SERVICES[1]],
+  [2, '15:00', vivo.id, SERVICES[0]],
+  [3, '13:00', vivo.id, SERVICES[2]],
+  [4, '09:30', vivo.id, SERVICES[1]],
   [4, '14:00', marco.id, SERVICES[3], 120],
-  [5, '10:00', jessica.id, SERVICES[6]],
+  [5, '10:00', vivo.id, SERVICES[6]],
 ];
 let u = 0;
 for (const [dayIdx, time, dentistId, service, minutes] of plan) {

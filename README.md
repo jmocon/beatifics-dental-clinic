@@ -70,7 +70,7 @@ Demo logins (created by `seed:demo`, password **`beatifics-demo`**):
 |---|---|
 | `admin@beatifics.local` | Admin: everything, including settings and staff accounts |
 | `reception@beatifics.local` | Staff: bookings, calendar, blocked times, reports |
-| `dentist@beatifics.local` | Staff, linked to the demo dentist "Dr. Jessica Vinuya", so it opens on her own patients |
+| `dentist@beatifics.local` | Staff, linked to the demo dentist "Dr. Rebecca Vivo", so it opens on their own patients |
 
 To start again with an empty database, stop the app and delete the `data/` folder.
 
@@ -106,7 +106,7 @@ The app is one Node.js process plus one SQLite file, so it needs a host that kee
 npm ci
 npm run build
 NODE_ENV=production DATABASE_PATH=/var/lib/beatifics/beatifics.db npm start
-npm run create-admin -- owner@clinic.ph "Dr. Jessica Vinuya" "a-long-secure-password"
+npm run create-admin -- owner@clinic.ph "Dr. Rebecca Vivo" "a-long-secure-password"
 ```
 
 Checklist:

@@ -8,7 +8,7 @@ import { OVERLAY_SCRIPT, stageHtml } from './overlay.ts';
 
 let BASE = '';
 let OUT = '';
-const PATIENT = { name: 'Carla Villanueva', mobile: '0917 888 2024', service: 'Check-ups & Cleaning', dentist: 'Dr. Jessica Vinuya' };
+const PATIENT = { name: 'Carla Villanueva', mobile: '0917 888 2024', service: 'Check-ups & Cleaning', dentist: 'Dr. Rebecca Vivo' };
 const STAFF = { email: 'admin@beatifics.local', password: 'beatifics-demo' };
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

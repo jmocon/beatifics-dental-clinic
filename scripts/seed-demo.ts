@@ -24,10 +24,10 @@ async function ensureUser(email: string, name: string, role: 'admin' | 'staff') 
 
 await ensureUser('admin@beatifics.local', 'Clinic Staff', 'admin');
 await ensureUser('reception@beatifics.local', 'Reception', 'staff');
-const drUserId = await ensureUser('dentist@beatifics.local', 'Dr. Jessica Vinuya', 'staff');
+const drUserId = await ensureUser('dentist@beatifics.local', 'Dr. Rebecca Vivo', 'staff');
 
 if (listDentists(db).length === 0) {
-  createDentist(db, { name: 'Dr. Jessica Vinuya', workingDays: [1, 2, 3, 4, 6], userId: drUserId }, now);
+  createDentist(db, { name: 'Dr. Rebecca Vivo', workingDays: [1, 2, 3, 4, 6], userId: drUserId }, now);
   createDentist(db, { name: 'Dr. Marco Reyes', workingDays: [2, 4, 6], userId: null }, now);
 }
 
@@ -61,4 +61,4 @@ for (const [i, p] of people.entries()) {
 
 console.log(`Seeded ${added} demo bookings (skipped any that already existed or clashed).`);
 console.log(`Demo logins (password ${PASSWORD}):`);
-console.log('  admin@beatifics.local (admin) · reception@beatifics.local (staff) · dentist@beatifics.local (Dr. Jessica, staff)');
+console.log('  admin@beatifics.local (admin) · reception@beatifics.local (staff) · dentist@beatifics.local (Dr. Vivo, staff)');
