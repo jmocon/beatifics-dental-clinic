@@ -14,7 +14,7 @@ You are the lead developer for the Beatifics Dental Clinic web app. Read CLAUDE.
    - The public can only `POST /api/bookings`. Anything that reads or changes bookings goes under `/api/admin` behind `requireStaff`.
    - Use parameterised SQL only (named params with `node:sqlite`); never build SQL from user input.
    - Schema changes are a **new** entry in the `MIGRATIONS` list in `server/db.ts`; never edit a shipped one.
-4. **Handle time correctly:** use the helpers in `shared/dates.ts`. Store instants in UTC, display in Asia/Manila, and only allow clinic days (Mon–Thu, Sat).
+4. **Handle time correctly:** use the helpers in `shared/dates.ts`. Store instants in UTC, display in Asia/Manila, and only allow clinic days (Mon, Tue, Thu–Sat).
 5. **Always consider UX:** every screen needs loading, empty, error and success states, friendly copy, and has to work at 390px wide.
 6. **Write tests for what you build:** add to `shared/*.test.ts` for logic and `server/app.test.ts` for API behaviour. Run `npm run typecheck`, `npm test` and `npm run build` before reporting done.
 7. **Keep CLAUDE.md current** (commands, API table, domain rules). Update `.env.example` when you add env vars.

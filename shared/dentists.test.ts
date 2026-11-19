@@ -2,13 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { chooseDentist, describeWorkingDays, freeDentists, type DaySlotContext } from './dentists.ts';
 import { slotRange } from './schedule.ts';
 
-const WED = '2026-10-07';
-const r = (time: string, mins = 60) => slotRange(WED, time, mins);
-const A = { id: 1, workingDays: [1, 2, 3, 4, 6], active: true };
-const B = { id: 2, workingDays: [3, 6], active: true };
+const FRI = '2026-10-09';
+const r = (time: string, mins = 60) => slotRange(FRI, time, mins);
+const A = { id: 1, workingDays: [1, 2, 4, 5, 6], active: true };
+const B = { id: 2, workingDays: [5, 6], active: true };
 
 const ctx = (over: Partial<DaySlotContext> = {}): DaySlotContext => ({
-  date: WED,
+  date: FRI,
   dentists: [A, B],
   closures: [],
   bookings: [],
@@ -42,7 +42,7 @@ describe('freeDentists', () => {
   });
 
   it('applies clinic-wide and per-dentist blocked times', () => {
-    const lunch = { id: 1, startDate: WED, endDate: null, repeat: 'none' as const, startTime: '12:00', endTime: '13:00', reason: '' };
+    const lunch = { id: 1, startDate: FRI, endDate: null, repeat: 'none' as const, startTime: '12:00', endTime: '13:00', reason: '' };
     expect(freeDentists(ctx({ closures: [{ ...lunch, dentistId: null }] }), r('12:00'))).toEqual([]);
     expect(freeDentists(ctx({ closures: [{ ...lunch, dentistId: 2 }] }), r('12:00'))).toEqual([1]);
     expect(freeDentists(ctx({ closures: [{ ...lunch, dentistId: 2 }] }), r('12:00'), 2)).toEqual([]);

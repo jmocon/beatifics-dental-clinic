@@ -32,7 +32,7 @@ Website and booking system for **Beatifics Dental Clinic**, 0200 E National High
 
 ### Public website (`/`)
 - One-page clinic site: services, the dentist, what to expect, opening hours and directions.
-- **Online booking**: choose a treatment, then a day, then a free time. Only times with room are shown. Fully booked days are marked, and Fridays, Sundays and blocked dates can't be picked.
+- **Online booking**: choose a treatment, then a day, then a free time. Only times with room are shown. Fully booked days are marked, and Wednesdays, Sundays and blocked dates can't be picked.
 - Confirmation screen with a **booking reference** (e.g. `BD-7K3Q9`).
 - **Manage my booking** (`/manage`): with the reference and mobile number, patients can **reschedule** or **cancel** until the day before their appointment.
 
@@ -148,7 +148,7 @@ The database schema is upgraded automatically on start. Migrations are an append
 
 ## How booking works
 
-- **Clinic hours:** Monday–Thursday and Saturday, 9:00 AM – 5:00 PM. Closed Friday and Sunday. All times are **Asia/Manila**.
+- **Clinic hours:** Monday, Tuesday and Thursday–Saturday, 9:00 AM – 5:00 PM. Closed Wednesday and Sunday. All times are **Asia/Manila**.
 - **Online requests** can be made from tomorrow up to 60 days ahead. Start times are every 30 minutes, and the appointment must finish by closing time. Same-day visits are by phone.
 - **Length:** each treatment uses its own length if one is set in Settings, otherwise the default time per patient (1 hour).
 - **Capacity:** a time is offered only if fewer than *"patients at the same time"* (chairs, default 2) bookings overlap it and it doesn't touch a blocked time.

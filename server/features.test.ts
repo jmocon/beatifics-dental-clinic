@@ -14,7 +14,7 @@ const booking = {
   fullName: 'Maria Santos',
   mobile: '0917 123 4567',
   service: 'Check-ups & Cleaning',
-  preferredDate: '2026-10-07', // Wednesday
+  preferredDate: '2026-10-09', // Friday
   preferredTime: '09:00',
   notes: '',
   consent: true,
@@ -56,8 +56,8 @@ describe('length per service', () => {
 
     const rc = (await request(app).get('/api/availability?service=Root%20Canal%20Treatment')).body;
     expect(rc.durationMinutes).toBe(120);
-    expect(rc.days['2026-10-07'].at(-1)).toBe('15:00');
-    expect((await slotsOn('2026-10-07')).at(-1)).toBe('16:00');
+    expect(rc.days['2026-10-09'].at(-1)).toBe('15:00');
+    expect((await slotsOn('2026-10-09')).at(-1)).toBe('16:00');
 
     const res = await request(app).post('/api/bookings').send({ ...booking, service: 'Root Canal Treatment' });
     expect(res.body.durationMinutes).toBe(120);
@@ -81,19 +81,19 @@ describe('length per service', () => {
 describe('closures and blocked times', () => {
   it('a whole-day closure removes the day and blocks requests; removing it restores them', async () => {
     const desk = await login('desk@clinic.test');
-    const res = await desk.post('/api/admin/closures').send({ startDate: '2026-10-07', reason: 'Holiday' });
+    const res = await desk.post('/api/admin/closures').send({ startDate: '2026-10-09', reason: 'Holiday' });
     expect(res.status).toBe(201);
-    expect(await slotsOn('2026-10-07')).toEqual([]);
+    expect(await slotsOn('2026-10-09')).toEqual([]);
     expect((await request(app).post('/api/bookings').send(booking)).status).toBe(409);
 
     await desk.delete(`/api/admin/closures/${res.body.closure.id}`);
-    expect(await slotsOn('2026-10-07')).toContain('09:00');
+    expect(await slotsOn('2026-10-09')).toContain('09:00');
   });
 
   it('a daily lunch break blocks only the slots that overlap it', async () => {
     const desk = await login('desk@clinic.test');
     await desk.post('/api/admin/closures').send({ startDate: '2026-10-06', repeat: 'daily', startTime: '12:00', endTime: '13:00', reason: 'Lunch' });
-    for (const d of ['2026-10-07', '2026-10-08', '2026-10-10']) {
+    for (const d of ['2026-10-09', '2026-10-08', '2026-10-10']) {
       const slots = await slotsOn(d);
       expect(slots).toContain('11:00');
       expect(slots).not.toContain('11:30'); // 11:30–12:30 runs into lunch
@@ -113,8 +113,8 @@ describe('closures and blocked times', () => {
 
   it('a date range closes every day in it', async () => {
     const desk = await login('desk@clinic.test');
-    await desk.post('/api/admin/closures').send({ startDate: '2026-10-07', endDate: '2026-10-10', reason: 'Seminar' });
-    expect(await slotsOn('2026-10-07')).toEqual([]);
+    await desk.post('/api/admin/closures').send({ startDate: '2026-10-09', endDate: '2026-10-10', reason: 'Seminar' });
+    expect(await slotsOn('2026-10-09')).toEqual([]);
     expect(await slotsOn('2026-10-10')).toEqual([]);
     expect(await slotsOn('2026-10-12')).toContain('09:00');
   });
@@ -123,30 +123,30 @@ describe('closures and blocked times', () => {
     await requestBooking({ preferredTime: '12:00' });
     await requestBooking({ mobile: nextMobile(), preferredTime: '14:00' });
     const desk = await login('desk@clinic.test');
-    const res = await desk.post('/api/admin/closures/preview').send({ startDate: '2026-10-07', startTime: '11:30', endTime: '13:00' });
+    const res = await desk.post('/api/admin/closures/preview').send({ startDate: '2026-10-09', startTime: '11:30', endTime: '13:00' });
     expect(res.body.affected).toHaveLength(1);
-    expect(res.body.affected[0]).toMatchObject({ fullName: 'Maria Santos', startAt: '2026-10-07T04:00:00.000Z' });
+    expect(res.body.affected[0]).toMatchObject({ fullName: 'Maria Santos', startAt: '2026-10-09T04:00:00.000Z' });
   });
 
   it('validates closures', async () => {
     const desk = await login('desk@clinic.test');
     const bad = [
       { startDate: 'soon' },
-      { startDate: '2026-10-07', endDate: '2026-10-01' },
-      { startDate: '2026-10-07', startTime: '12:00' },
-      { startDate: '2026-10-07', startTime: '13:00', endTime: '12:00' },
-      { startDate: '2026-10-07', repeat: 'monthly' },
+      { startDate: '2026-10-09', endDate: '2026-10-01' },
+      { startDate: '2026-10-09', startTime: '12:00' },
+      { startDate: '2026-10-09', startTime: '13:00', endTime: '12:00' },
+      { startDate: '2026-10-09', repeat: 'monthly' },
     ];
     for (const body of bad) expect((await desk.post('/api/admin/closures').send(body)).status, JSON.stringify(body)).toBe(400);
-    expect((await request(app).post('/api/admin/closures').send({ startDate: '2026-10-07' })).status).toBe(401);
+    expect((await request(app).post('/api/admin/closures').send({ startDate: '2026-10-09' })).status).toBe(401);
   });
 
   it('shows closures in the day schedule', async () => {
     const desk = await login('desk@clinic.test');
     await desk.post('/api/admin/closures').send({ startDate: '2026-10-06', repeat: 'daily', startTime: '12:00', endTime: '13:00', reason: 'Lunch' });
-    const res = await desk.get('/api/admin/schedule?date=2026-10-07');
+    const res = await desk.get('/api/admin/schedule?date=2026-10-09');
     expect(res.body.closures).toEqual([expect.objectContaining({ startTime: '12:00', endTime: '13:00', reason: 'Lunch' })]);
-    expect((await desk.get('/api/admin/schedule?date=2026-10-09')).body.closures).toHaveLength(1);
+    expect((await desk.get('/api/admin/schedule?date=2026-10-07')).body.closures).toHaveLength(1);
   });
 });
 
@@ -163,7 +163,7 @@ describe('new-request alerts', () => {
       fullName: 'Walk In',
       mobile: '09180000000',
       service: 'Consultation / check-up',
-      startAt: '2026-10-07T10:00',
+      startAt: '2026-10-09T10:00',
       durationMinutes: 60,
     });
 
@@ -191,11 +191,11 @@ describe('patient self-service', () => {
   it('lets the patient cancel, which frees the slot and alerts staff', async () => {
     const { id, reference } = await requestBooking();
     await requestBooking({ mobile: nextMobile() }); // 9:00 now full (capacity 2)
-    expect(await slotsOn('2026-10-07')).not.toContain('09:00');
+    expect(await slotsOn('2026-10-09')).not.toContain('09:00');
 
     const res = await request(app).post('/api/manage/cancel').send({ ...PATIENT_ID, reference });
     expect(res.body.booking).toMatchObject({ status: 'cancelled', canChange: false });
-    expect(await slotsOn('2026-10-07')).toContain('09:00');
+    expect(await slotsOn('2026-10-09')).toContain('09:00');
 
     const admin = await login();
     const detail = (await admin.get(`/api/admin/bookings/${id}`)).body;
@@ -222,7 +222,7 @@ describe('patient self-service', () => {
     await requestBooking({ mobile: nextMobile() }); // 9:00 now full, including Maria
     const res = await request(app)
       .post('/api/manage/reschedule')
-      .send({ ...PATIENT_ID, reference, preferredDate: '2026-10-07', preferredTime: '09:30' });
+      .send({ ...PATIENT_ID, reference, preferredDate: '2026-10-09', preferredTime: '09:30' });
     expect(res.status).toBe(200); // 9:30 overlaps only the other booking once Maria moves
   });
 
@@ -235,10 +235,10 @@ describe('patient self-service', () => {
     expect(taken.status).toBe(409);
     const friday = await request(app)
       .post('/api/manage/reschedule')
-      .send({ ...PATIENT_ID, reference, preferredDate: '2026-10-09', preferredTime: '09:00' });
+      .send({ ...PATIENT_ID, reference, preferredDate: '2026-10-07', preferredTime: '09:00' });
     expect(friday.status).toBe(400);
 
-    now = new Date('2026-10-07T00:00:00Z'); // 8 AM Manila on the appointment day
+    now = new Date('2026-10-09T00:00:00Z'); // 8 AM Manila on the appointment day
     const lookup = await request(app).post('/api/manage/lookup').send({ ...PATIENT_ID, reference });
     expect(lookup.body.booking.canChange).toBe(false);
     expect((await request(app).post('/api/manage/cancel').send({ ...PATIENT_ID, reference })).status).toBe(409);
@@ -285,12 +285,12 @@ describe('activity log', () => {
   it('records who did what on a booking', async () => {
     const { id } = await requestBooking();
     const admin = await login();
-    await admin.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed', startAt: '2026-10-07T10:00' });
+    await admin.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed', startAt: '2026-10-09T10:00' });
     await admin.patch(`/api/admin/bookings/${id}`).send({ staffNotes: 'Called' });
     const activity = (await admin.get(`/api/admin/bookings/${id}`)).body.activity;
     expect(activity.map((a: { actor: string; summary: string }) => `${a.actor}: ${a.summary}`)).toEqual([
       'Rose: Updated staff notes',
-      expect.stringMatching(/^Rose: Confirmed for Wed, Oct 7.*10:00 AM \(1 hour\)$/),
+      expect.stringMatching(/^Rose: Confirmed for Fri, Oct 9.*10:00 AM \(1 hour\)$/),
       expect.stringMatching(/^Patient: Requested online for/),
     ]);
   });
@@ -359,7 +359,7 @@ describe('staff accounts', () => {
 describe('reports', () => {
   it('summarises a period', async () => {
     const admin = await login();
-    const a = await requestBooking(); // Wed 9:00 online
+    const a = await requestBooking(); // Fri 9:00 online
     const b = await requestBooking({ mobile: nextMobile(), preferredDate: '2026-10-08', preferredTime: '14:00', service: 'Root Canal Treatment' });
     const c = await requestBooking({ mobile: nextMobile(), preferredDate: '2026-10-08', preferredTime: '15:00' });
     await admin.post('/api/admin/bookings').send({
@@ -388,7 +388,7 @@ describe('reports', () => {
     });
     expect(r.byService[0]).toEqual({ service: 'Check-ups & Cleaning', count: 2 });
     expect(r.byWeekday.find((d: { weekday: number }) => d.weekday === 4)).toEqual({ weekday: 4, count: 1 });
-    expect(r.byWeekday.map((d: { weekday: number }) => d.weekday)).toEqual([1, 2, 3, 4, 6]);
+    expect(r.byWeekday.map((d: { weekday: number }) => d.weekday)).toEqual([1, 2, 4, 5, 6]);
     expect(r.byHour.find((h: { hour: number }) => h.hour === 9)).toEqual({ hour: 9, count: 1 });
     expect((await admin.get('/api/admin/reports?from=2026-10-31&to=2026-10-01')).status).toBe(400);
   });
@@ -420,7 +420,7 @@ describe('database upgrade to v3', () => {
     old
       .prepare(
         `INSERT INTO bookings (reference, full_name, mobile, service, start_at, created_at, updated_at)
-         VALUES ('BD-AAAAA', 'X', '09170000000', 'Check-ups & Cleaning', '2026-10-07T01:00:00.000Z', 't', 't')`,
+         VALUES ('BD-AAAAA', 'X', '09170000000', 'Check-ups & Cleaning', '2026-10-09T01:00:00.000Z', 't', 't')`,
       )
       .run();
     migrate(old);

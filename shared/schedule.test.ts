@@ -45,8 +45,8 @@ describe('closures', () => {
   });
 
   it('validates input', () => {
-    expect(closureSchema.safeParse({ startDate: '2026-10-07' }).success).toBe(true);
-    expect(closureSchema.safeParse({ startDate: '2026-10-07', startTime: '13:00', endTime: '12:00' }).success).toBe(false);
+    expect(closureSchema.safeParse({ startDate: '2026-10-09' }).success).toBe(true);
+    expect(closureSchema.safeParse({ startDate: '2026-10-09', startTime: '13:00', endTime: '12:00' }).success).toBe(false);
   });
 });
 
@@ -74,25 +74,25 @@ describe('layoutLanes', () => {
 
 describe('dailySlots', () => {
   it('offers a start every 30 minutes that ends by closing time', () => {
-    const slots = dailySlots('2026-10-07', 60); // Wednesday
+    const slots = dailySlots('2026-10-09', 60); // Friday
     expect(slots[0]).toBe('09:00');
     expect(slots.at(-1)).toBe('16:00');
     expect(slots).toHaveLength(15);
   });
 
   it('fits fewer starts for longer appointments', () => {
-    expect(dailySlots('2026-10-07', 120).at(-1)).toBe('15:00');
-    expect(dailySlots('2026-10-07', 30).at(-1)).toBe('16:30');
+    expect(dailySlots('2026-10-09', 120).at(-1)).toBe('15:00');
+    expect(dailySlots('2026-10-09', 30).at(-1)).toBe('16:30');
   });
 
   it('has no slots on closed days', () => {
-    expect(dailySlots('2026-10-09', 60)).toEqual([]); // Friday
+    expect(dailySlots('2026-10-07', 60)).toEqual([]); // Wednesday
     expect(dailySlots('2026-10-11', 60)).toEqual([]); // Sunday
   });
 });
 
 describe('capacity', () => {
-  const d = '2026-10-07';
+  const d = '2026-10-09';
   const r = (time: string, mins = 60) => slotRange(d, time, mins);
 
   it('counts the most appointments running at once', () => {

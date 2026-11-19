@@ -7,7 +7,7 @@ const valid = {
   fullName: 'Maria Santos',
   mobile: '0917 123 4567',
   service: 'Check-ups & Cleaning',
-  preferredDate: '2026-10-07',
+  preferredDate: '2026-10-09',
   preferredTime: '09:00',
   notes: '',
   consent: true,
@@ -54,7 +54,7 @@ describe('bookingRequestSchema', () => {
   });
 
   it('reports a friendly message for each problem field', () => {
-    const r = schema.safeParse({ fullName: 'A', mobile: '123', service: 'Teeth whitening', preferredDate: '2026-10-09', consent: false });
+    const r = schema.safeParse({ fullName: 'A', mobile: '123', service: 'Teeth whitening', preferredDate: '2026-10-07', consent: false });
     expect(r.success).toBe(false);
     const fields = zodFieldErrors(r.error!);
     expect(Object.keys(fields).sort()).toEqual(['consent', 'fullName', 'mobile', 'preferredDate', 'preferredTime', 'service']);
@@ -62,7 +62,7 @@ describe('bookingRequestSchema', () => {
   });
 
   it('rejects closed days, today and past dates', () => {
-    for (const d of ['2026-10-09', '2026-10-11', '2026-10-06', '2026-09-30', '2027-01-01']) {
+    for (const d of ['2026-10-07', '2026-10-11', '2026-10-06', '2026-10-02', '2026-12-30']) {
       expect(schema.safeParse({ ...valid, preferredDate: d }).success, d).toBe(false);
     }
   });

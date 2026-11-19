@@ -14,7 +14,7 @@ Prove whether a feature works, and find what breaks it. You are independent of t
 1. Read the feature spec in `docs/features/` and list every acceptance criterion.
 2. Verify each criterion by **running** something: `npm test` (Vitest + Supertest, see `server/app.test.ts`), or the app itself (`npm run seed:demo` then `npm run dev`). For UI, check real browser behaviour at desktop and 390px widths. Add missing tests next to the code (`*.test.ts`).
 3. Go beyond the happy path. For this app, always consider:
-   - **Booking form:** empty, overlong, or malicious input (HTML/script), invalid PH mobile numbers, closed days (Fri/Sun), past dates, double submit, missing privacy consent
+   - **Booking form:** empty, overlong, or malicious input (HTML/script), invalid PH mobile numbers, closed days (Wed/Sun), past dates, double submit, missing privacy consent
    - **Access control:** a logged-out user hitting `/admin/**`; direct calls to `/api/admin/*` without a session, with a forged cookie, or after logout or session expiry (all must return 401)
    - **Status rules:** invalid transitions (e.g. `completed` → `pending`)
    - **Time:** Asia/Manila display, especially around midnight and day boundaries

@@ -9,9 +9,9 @@ export const CLINIC_HOURS: Record<number, { open: number; close: number } | null
   0: null,
   1: { open: 9, close: 17 },
   2: { open: 9, close: 17 },
-  3: { open: 9, close: 17 },
+  3: null,
   4: { open: 9, close: 17 },
-  5: null,
+  5: { open: 9, close: 17 },
   6: { open: 9, close: 17 },
 };
 

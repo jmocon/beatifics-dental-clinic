@@ -13,7 +13,7 @@ const booking = {
   fullName: 'Maria Santos',
   mobile: '0917 123 4567',
   service: 'Check-ups & Cleaning',
-  preferredDate: '2026-10-07', // Wednesday
+  preferredDate: '2026-10-09', // Friday
   preferredTime: '09:00',
   notes: 'Sensitive upper right tooth',
   consent: true,
@@ -48,14 +48,14 @@ describe('POST /api/bookings (public)', () => {
   it('stores a valid request as pending with the chosen slot and default length', async () => {
     const res = await request(app).post('/api/bookings').send(booking);
     expect(res.status).toBe(201);
-    expect(res.body).toMatchObject({ startAt: '2026-10-07T01:00:00.000Z', durationMinutes: 60, duplicate: false });
+    expect(res.body).toMatchObject({ startAt: '2026-10-09T01:00:00.000Z', durationMinutes: 60, duplicate: false });
     expect(res.body.reference).toMatch(/^BD-[A-Z2-9]{5}$/);
     const row = db.prepare('SELECT * FROM bookings').get() as Record<string, unknown>;
     expect(row).toMatchObject({
       full_name: 'Maria Santos',
       mobile: '09171234567',
       status: 'pending',
-      start_at: '2026-10-07T01:00:00.000Z',
+      start_at: '2026-10-09T01:00:00.000Z',
       duration_minutes: 60,
     });
   });
@@ -63,7 +63,7 @@ describe('POST /api/bookings (public)', () => {
   it('returns field errors for invalid input', async () => {
     const res = await request(app)
       .post('/api/bookings')
-      .send({ ...booking, mobile: '12345', preferredDate: '2026-10-09', preferredTime: '', consent: false });
+      .send({ ...booking, mobile: '12345', preferredDate: '2026-10-07', preferredTime: '', consent: false });
     expect(res.status).toBe(400);
     expect(Object.keys(res.body.fields).sort()).toEqual(['consent', 'mobile', 'preferredDate', 'preferredTime']);
     expect(db.prepare('SELECT COUNT(*) AS n FROM bookings').get()).toEqual({ n: 0 });
@@ -80,7 +80,7 @@ describe('POST /api/bookings (public)', () => {
     const a = await request(app).post('/api/bookings').send(booking);
     const b = await request(app).post('/api/bookings').send({ ...booking, mobile: '+63 917 123 4567', preferredTime: '14:00' });
     expect(b.status).toBe(200);
-    expect(b.body).toMatchObject({ reference: a.body.reference, duplicate: true, startAt: '2026-10-07T01:00:00.000Z' });
+    expect(b.body).toMatchObject({ reference: a.body.reference, duplicate: true, startAt: '2026-10-09T01:00:00.000Z' });
     expect(db.prepare('SELECT COUNT(*) AS n FROM bookings').get()).toEqual({ n: 1 });
   });
 
@@ -115,10 +115,10 @@ describe('time slots and capacity', () => {
     expect(res.status).toBe(200);
     expect(res.body.durationMinutes).toBe(60);
     const days = Object.keys(res.body.days);
-    expect(days[0]).toBe('2026-10-07'); // tomorrow
-    expect(days).not.toContain('2026-10-09'); // Friday
+    expect(days[0]).toBe('2026-10-08'); // first open day (tomorrow is a Wednesday)
+    expect(days).not.toContain('2026-10-07'); // Wednesday
     expect(days).not.toContain('2026-10-11'); // Sunday
-    expect(res.body.days['2026-10-07']).toHaveLength(15);
+    expect(res.body.days['2026-10-09']).toHaveLength(15);
   });
 
   it('fills a time once capacity (default 2) is reached, and frees it on cancel', async () => {
@@ -129,14 +129,14 @@ describe('time slots and capacity', () => {
     expect(third.status).toBe(409);
     expect(third.body.fields.preferredTime).toBeTruthy();
 
-    let slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-07'];
+    let slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-09'];
     expect(slots).not.toContain('09:00');
     expect(slots).not.toContain('09:30'); // overlaps both 9–10 bookings
     expect(slots).toContain('10:00'); // free: the 9–10 bookings end as 10:00 starts
 
     const agent = await staffAgent();
     await agent.patch(`/api/admin/bookings/${second}`).send({ status: 'cancelled' });
-    slots = (await request(app).get('/api/availability')).body.days['2026-10-07'];
+    slots = (await request(app).get('/api/availability')).body.days['2026-10-09'];
     expect(slots).toContain('09:00');
   });
 
@@ -146,7 +146,7 @@ describe('time slots and capacity', () => {
     const agent = await staffAgent();
     // Stretch the 9:00 booking to 2 hours: it now overlaps the 10:00 one.
     await agent.patch(`/api/admin/bookings/${id}`).send({ durationMinutes: 120 });
-    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-07'];
+    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-09'];
     expect(slots).not.toContain('10:00');
     expect(slots).toContain('09:00'); // 9–10 only has one patient (the 9:00 one)
   });
@@ -156,7 +156,7 @@ describe('time slots and capacity', () => {
     await agent.put('/api/admin/settings').send({ appointmentMinutes: 240, capacity: 1 });
     await createRequest({ mobile: nextMobile(), preferredTime: '09:00' });
     await createRequest({ mobile: nextMobile(), preferredTime: '13:00' });
-    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-07'];
+    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-09'];
     expect(slots).toEqual([]);
   });
 });
@@ -167,7 +167,7 @@ describe('admin access control', () => {
     expect((await request(app).get('/api/admin/bookings')).status).toBe(401);
     expect((await request(app).get(`/api/admin/bookings/${id}`)).status).toBe(401);
     expect((await request(app).patch(`/api/admin/bookings/${id}`).send({ status: 'cancelled' })).status).toBe(401);
-    expect((await request(app).get('/api/admin/schedule?date=2026-10-07')).status).toBe(401);
+    expect((await request(app).get('/api/admin/schedule?date=2026-10-09')).status).toBe(401);
     expect((await request(app).get('/api/admin/settings')).status).toBe(401);
     expect((await request(app).put('/api/admin/settings').send({ appointmentMinutes: 15, capacity: 9 })).status).toBe(401);
     expect((await request(app).get('/api/admin/bookings').set('Cookie', 'bd_session=forged')).status).toBe(401);
@@ -231,12 +231,12 @@ describe('admin bookings', () => {
 
     const ok = await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed' });
     expect(ok.status).toBe(200);
-    expect(ok.body.booking).toMatchObject({ status: 'confirmed', startAt: '2026-10-07T01:00:00.000Z', updatedBy: 'Rose' });
+    expect(ok.body.booking).toMatchObject({ status: 'confirmed', startAt: '2026-10-09T01:00:00.000Z', updatedBy: 'Rose' });
 
     let counts = (await agent.get('/api/admin/bookings')).body.counts;
     expect(counts).toMatchObject({ action: 0, upcoming: 1, today: 0 });
 
-    now = new Date('2026-10-07T00:30:00Z'); // 8:30 AM Manila on the appointment day
+    now = new Date('2026-10-09T00:30:00Z'); // 8:30 AM Manila on the appointment day
     counts = (await agent.get('/api/admin/bookings?view=today')).body.counts;
     expect(counts.today).toBe(1);
   });
@@ -246,8 +246,8 @@ describe('admin bookings', () => {
     const agent = await staffAgent();
     const a = await agent
       .patch(`/api/admin/bookings/${id}`)
-      .send({ status: 'confirmed', startAt: '2026-10-07T09:30', durationMinutes: 90 });
-    expect(a.body.booking).toMatchObject({ status: 'confirmed', startAt: '2026-10-07T01:30:00.000Z', durationMinutes: 90 });
+      .send({ status: 'confirmed', startAt: '2026-10-09T09:30', durationMinutes: 90 });
+    expect(a.body.booking).toMatchObject({ status: 'confirmed', startAt: '2026-10-09T01:30:00.000Z', durationMinutes: 90 });
 
     const b = await agent.patch(`/api/admin/bookings/${id}`).send({ startAt: '2026-10-08T14:00' });
     expect(b.body.booking).toMatchObject({ startAt: '2026-10-08T06:00:00.000Z', durationMinutes: 90 });
@@ -258,7 +258,7 @@ describe('admin bookings', () => {
     await createRequest({ mobile: nextMobile() });
     const id = await createRequest({ mobile: nextMobile(), preferredTime: '13:00' });
     const agent = await staffAgent();
-    const res = await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed', startAt: '2026-10-07T09:00' });
+    const res = await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed', startAt: '2026-10-09T09:00' });
     expect(res.status).toBe(200);
   });
 
@@ -267,7 +267,7 @@ describe('admin bookings', () => {
     const agent = await staffAgent();
     expect((await agent.patch(`/api/admin/bookings/${id}`).send({ durationMinutes: 50 })).status).toBe(400);
     expect((await agent.patch(`/api/admin/bookings/${id}`).send({ durationMinutes: 600 })).status).toBe(400);
-    expect((await agent.patch(`/api/admin/bookings/${id}`).send({ startAt: '2026-10-07 09:00' })).status).toBe(400);
+    expect((await agent.patch(`/api/admin/bookings/${id}`).send({ startAt: '2026-10-09 09:00' })).status).toBe(400);
 
     await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'confirmed' });
     await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'completed' });
@@ -293,7 +293,7 @@ describe('admin bookings', () => {
     const agent = await staffAgent();
     await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'cancelled' });
     const res = await agent.patch(`/api/admin/bookings/${id}`).send({ status: 'pending' });
-    expect(res.body.booking).toMatchObject({ status: 'pending', startAt: '2026-10-07T01:00:00.000Z' });
+    expect(res.body.booking).toMatchObject({ status: 'pending', startAt: '2026-10-09T01:00:00.000Z' });
   });
 
   it('saves staff notes without changing status', async () => {
@@ -310,10 +310,10 @@ describe('admin bookings', () => {
     const agent = await staffAgent();
     await agent.patch(`/api/admin/bookings/${cancelled}`).send({ status: 'cancelled' });
 
-    const res = await agent.get('/api/admin/schedule?date=2026-10-07');
+    const res = await agent.get('/api/admin/schedule?date=2026-10-09');
     expect(res.body.capacity).toBe(2);
     expect(res.body.entries).toHaveLength(1);
-    expect(res.body.entries[0]).toMatchObject({ startAt: '2026-10-07T02:00:00.000Z', durationMinutes: 60 });
+    expect(res.body.entries[0]).toMatchObject({ startAt: '2026-10-09T02:00:00.000Z', durationMinutes: 60 });
     expect(res.body.entries[0].mobile).toBeUndefined();
     expect((await agent.get('/api/admin/schedule?date=nope')).status).toBe(400);
   });
@@ -364,9 +364,9 @@ describe('staff-added appointments', () => {
 
   it('may overbook, and the time then disappears from online availability', async () => {
     const agent = await staffAgent();
-    const at9 = { ...walkIn, startAt: '2026-10-07T09:00', durationMinutes: 60 };
+    const at9 = { ...walkIn, startAt: '2026-10-09T09:00', durationMinutes: 60 };
     for (let i = 0; i < 3; i++) expect((await agent.post('/api/admin/bookings').send(at9)).status).toBe(201);
-    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-07'];
+    const slots: string[] = (await request(app).get('/api/availability')).body.days['2026-10-09'];
     expect(slots).not.toContain('09:00');
   });
 
@@ -413,13 +413,13 @@ describe('database upgrade', () => {
       `INSERT INTO bookings (reference, full_name, mobile, service, preferred_date, time_preference, status, confirmed_at, created_at, updated_at)
        VALUES (?, 'X', '09170000000', 'Check-ups & Cleaning', ?, ?, ?, ?, 't', 't')`,
     );
-    insert.run('BD-AAAAA', '2026-10-07', 'afternoon', 'pending', null);
+    insert.run('BD-AAAAA', '2026-10-09', 'afternoon', 'pending', null);
     insert.run('BD-BBBBB', '2026-10-08', 'any', 'confirmed', '2026-10-08T02:30:00.000Z');
 
     migrate(old);
     const rows = old.prepare('SELECT reference, start_at, duration_minutes FROM bookings ORDER BY reference').all();
     expect(rows).toEqual([
-      { reference: 'BD-AAAAA', start_at: '2026-10-07T05:00:00.000Z', duration_minutes: 60 },
+      { reference: 'BD-AAAAA', start_at: '2026-10-09T05:00:00.000Z', duration_minutes: 60 },
       { reference: 'BD-BBBBB', start_at: '2026-10-08T02:30:00.000Z', duration_minutes: 60 },
     ]);
   });

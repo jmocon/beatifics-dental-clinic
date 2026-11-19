@@ -302,7 +302,7 @@ export function DentistsSettings() {
   const [flash, setFlash] = useFlash();
   const [busy, setBusy] = useState<number | 'new' | 'assign' | null>(null);
   const [newName, setNewName] = useState('');
-  const [newDays, setNewDays] = useState<number[]>([1, 2, 3, 4, 6]);
+  const [newDays, setNewDays] = useState<number[]>([1, 2, 4, 5, 6]);
   const [newUser, setNewUser] = useState<number | null>(null);
   const [nameDrafts, setNameDrafts] = useState<Record<number, string>>({});
 

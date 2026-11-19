@@ -586,7 +586,7 @@ export function buildReport(db: Db, from: string, to: string, dentists: Dentist[
     },
     byService: SERVICES.map((s) => ({ service: s, count: services.get(s) ?? 0 })).sort((a, b) => b.count - a.count),
     byDentist: dentistIds.map((id) => ({ dentistId: id, name: nameOf(id), count: byDentistId.get(id) ?? 0 })),
-    // Clinic days in week order (Mon–Thu, Sat), plus any other day that has bookings (e.g. staff exceptions).
+    // Clinic days in week order (Mon, Tue, Thu–Sat), plus any other day that has bookings (e.g. staff exceptions).
     byWeekday: [1, 2, 3, 4, 5, 6, 0]
       .filter((wd) => isClinicDay(addDays('2026-01-04', wd)) || weekdays.has(wd))
       .map((wd) => ({ weekday: wd, count: weekdays.get(wd) ?? 0 })),

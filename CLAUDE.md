@@ -82,7 +82,7 @@ In dev, Vite proxies `/api` to the Node server. In production, the Node server s
 
 ## Domain rules (implemented in `shared/`)
 
-- Clinic hours: **Mon–Thu & Sat, 9:00 AM – 5:00 PM. Friday and Sunday closed.**
+- Clinic hours: **Mon, Tue & Thu–Sat, 9:00 AM – 5:00 PM. Wednesday and Sunday closed.**
 - Timezone is always **Asia/Manila** (UTC+8). Calendar dates are `YYYY-MM-DD` strings; instants are stored as UTC ISO strings.
 - Mobile numbers are normalised to `09XXXXXXXXX` (accepts spaces, dashes, `+63`).
 - **Time slots** ([shared/schedule.ts](shared/schedule.ts)): every booking has `start_at` + `duration_minutes`. Patients pick a day (**tomorrow up to 60 days ahead**, clinic days only), then a free start time. Starts are offered every 30 min and must end by closing time. Same-day visits go by phone.

@@ -9,10 +9,10 @@ import { migrate, MIGRATIONS, openDb, type Db } from './db.ts';
 let now = new Date('2026-10-06T02:00:00Z'); // Tue 6 Oct, 10 AM Manila
 let db: Db;
 let app: ReturnType<typeof createApp>;
-let drA: number; // Mon–Thu, Sat
+let drA: number; // Mon, Tue, Thu–Sat
 let drB: number; // Thu, Sat only
 
-const WED = '2026-10-07';
+const FRI = '2026-10-09';
 const THU = '2026-10-08';
 const booking = {
   fullName: 'Maria Santos',
@@ -53,7 +53,7 @@ beforeEach(async () => {
   const drUser = await createUser(db, 'dr.a@clinic.test', 'Dr. A', 'correct-horse-battery', 'staff');
   app = createApp({ db, now: () => now, rateLimits: false });
   const admin = await login();
-  drA = (await admin.post('/api/admin/dentists').send({ name: 'Dr. A', workingDays: [1, 2, 3, 4, 6], userId: drUser.id })).body.dentist.id;
+  drA = (await admin.post('/api/admin/dentists').send({ name: 'Dr. A', workingDays: [1, 2, 4, 5, 6], userId: drUser.id })).body.dentist.id;
   drB = (await admin.post('/api/admin/dentists').send({ name: 'Dr. B', workingDays: [4, 6] })).body.dentist.id;
 });
 
@@ -61,7 +61,7 @@ describe('dentist setup', () => {
   it('lists dentists publicly without private fields, with distinct colours for staff', async () => {
     const pub = (await request(app).get('/api/dentists')).body.dentists;
     expect(pub).toEqual([
-      { id: drA, name: 'Dr. A', workingDays: [1, 2, 3, 4, 6] },
+      { id: drA, name: 'Dr. A', workingDays: [1, 2, 4, 5, 6] },
       { id: drB, name: 'Dr. B', workingDays: [4, 6] },
     ]);
     const admin = await login();
@@ -90,12 +90,12 @@ describe('dentist setup', () => {
 
 describe('online booking with dentists', () => {
   it('only offers days a dentist works, one patient per dentist at a time', async () => {
-    // Wednesday: only Dr. A works, so one booking fills 9:00 even though capacity is 2.
-    const first = await requestBooking({ preferredDate: WED });
+    // Friday: only Dr. A works, so one booking fills 9:00 even though capacity is 2.
+    const first = await requestBooking({ preferredDate: FRI });
     expect(first.status).toBe(201);
     expect(dentistOf(first.body.reference)).toBe(drA);
-    expect(await slots(WED)).not.toContain('09:00');
-    expect((await requestBooking({ preferredDate: WED })).status).toBe(409);
+    expect(await slots(FRI)).not.toContain('09:00');
+    expect((await requestBooking({ preferredDate: FRI })).status).toBe(409);
 
     // Thursday: both work, so two fit at 9:00, the third doesn't.
     const t1 = await requestBooking();
@@ -105,7 +105,7 @@ describe('online booking with dentists', () => {
   });
 
   it('lets patients ask for a specific dentist', async () => {
-    expect(await slots(WED, drB)).toEqual([]); // Dr. B doesn't work Wednesdays
+    expect(await slots(FRI, drB)).toEqual([]); // Dr. B doesn't work Fridays
     const res = await requestBooking({ dentistId: drB });
     expect(res.status).toBe(201);
     expect(res.body.dentistName).toBe('Dr. B');
@@ -133,7 +133,7 @@ describe('online booking with dentists', () => {
     const res = await requestBooking();
     expect(dentistOf(res.body.reference)).toBe(drB);
     expect(await slots(THU, drA)).toEqual([]);
-    expect(await slots(WED)).toContain('09:00'); // leave is only on Thursday
+    expect(await slots(FRI)).toContain('09:00'); // leave is only on Thursday
   });
 });
 
@@ -176,11 +176,11 @@ describe('staff tools', () => {
       `INSERT INTO bookings (reference, full_name, mobile, service, start_at, created_at, updated_at)
        VALUES (?, 'Old', ?, 'Check-ups & Cleaning', ?, 't', 't')`,
     );
-    // Thursday 9:00 ×3 (only two dentists) and Wednesday 9:00 (only Dr. A works).
+    // Thursday 9:00 ×3 (only two dentists) and Friday 9:00 (only Dr. A works).
     insert.run('BD-OLD21', '09170000001', '2026-10-08T01:00:00.000Z');
     insert.run('BD-OLD22', '09170000002', '2026-10-08T01:00:00.000Z');
     insert.run('BD-OLD23', '09170000003', '2026-10-08T01:00:00.000Z');
-    insert.run('BD-OLD24', '09170000004', '2026-10-07T01:00:00.000Z');
+    insert.run('BD-OLD24', '09170000004', '2026-10-09T01:00:00.000Z');
     const admin = await login();
     expect((await admin.get('/api/admin/dentists')).body.unassignedUpcoming).toBe(4);
     expect((await admin.get('/api/admin/bookings?view=all&dentist=unassigned')).body.bookings).toHaveLength(4);
@@ -215,12 +215,12 @@ describe('patients changing their booking', () => {
   it('stays with the dentist they asked for; “any” bookings can move to whoever is free', async () => {
     const asked = await requestBooking({ mobile: '0917 555 0001', dentistId: drB });
     const avail = await request(app).post('/api/manage/availability').send({ reference: asked.body.reference, mobile: '0917 555 0001' });
-    expect(avail.body.days[WED]).toEqual([]); // Dr. B is off on Wednesdays
+    expect(avail.body.days[FRI]).toEqual([]); // Dr. B is off on Fridays
 
     const anyone = await requestBooking({ mobile: '0917 555 0002' });
     const moved = await request(app)
       .post('/api/manage/reschedule')
-      .send({ reference: anyone.body.reference, mobile: '0917 555 0002', preferredDate: WED, preferredTime: '10:00' });
+      .send({ reference: anyone.body.reference, mobile: '0917 555 0002', preferredDate: FRI, preferredTime: '10:00' });
     expect(moved.status).toBe(200);
     expect(moved.body.booking.dentistName).toBe('Dr. A');
   });
@@ -230,10 +230,10 @@ describe('reports by dentist', () => {
   it('counts appointments per dentist, including unassigned', async () => {
     await requestBooking();
     await requestBooking();
-    await requestBooking({ preferredDate: WED });
+    await requestBooking({ preferredDate: FRI });
     db.prepare(
       `INSERT INTO bookings (reference, full_name, mobile, service, start_at, created_at, updated_at)
-       VALUES ('BD-OLD33', 'Old', '09170000002', 'Check-ups & Cleaning', '2026-10-09T01:00:00.000Z', 't', 't')`,
+       VALUES ('BD-OLD33', 'Old', '09170000002', 'Check-ups & Cleaning', '2026-10-07T01:00:00.000Z', 't', 't')`,
     ).run();
     const admin = await login();
     const r = (await admin.get('/api/admin/reports?from=2026-10-01&to=2026-10-31')).body;
@@ -253,7 +253,7 @@ describe('database upgrade to v4', () => {
     old
       .prepare(
         `INSERT INTO bookings (reference, full_name, mobile, service, start_at, created_at, updated_at)
-         VALUES ('BD-AAAAA', 'X', '09170000000', 'Check-ups & Cleaning', '2026-10-07T01:00:00.000Z', 't', 't')`,
+         VALUES ('BD-AAAAA', 'X', '09170000000', 'Check-ups & Cleaning', '2026-10-09T01:00:00.000Z', 't', 't')`,
       )
       .run();
     migrate(old);

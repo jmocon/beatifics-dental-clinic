@@ -27,7 +27,7 @@ await ensureUser('reception@beatifics.local', 'Reception', 'staff');
 const drUserId = await ensureUser('dentist@beatifics.local', 'Dr. Rebecca Vivo', 'staff');
 
 if (listDentists(db).length === 0) {
-  createDentist(db, { name: 'Dr. Rebecca Vivo', workingDays: [1, 2, 3, 4, 6], userId: drUserId }, now);
+  createDentist(db, { name: 'Dr. Rebecca Vivo', workingDays: [1, 2, 4, 5, 6], userId: drUserId }, now);
   createDentist(db, { name: 'Dr. Marco Reyes', workingDays: [2, 4, 6], userId: null }, now);
 }
 

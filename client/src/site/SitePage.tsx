@@ -188,7 +188,7 @@ export function SitePage() {
             </div>
             <div className="hero-badge">
               <span className="eyebrow-sm">{openNow ? 'Open now' : 'Clinic hours'}</span>
-              <span className="hero-badge-detail">{openNow ? 'Until 5:00 PM today' : 'Mon–Thu & Sat, 9–5'}</span>
+              <span className="hero-badge-detail">{openNow ? 'Until 5:00 PM today' : 'Mon, Tue & Thu–Sat, 9–5'}</span>
             </div>
           </div>
         </section>
