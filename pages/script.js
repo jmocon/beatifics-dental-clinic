@@ -32,7 +32,7 @@
   }
 
   // ---------- Today's hours & "Open now" (always Manila time) ----------
-  var HOURS = { 0: null, 1: [9, 17], 2: [9, 17], 3: [9, 17], 4: [9, 17], 5: null, 6: [9, 17] };
+  var HOURS = { 0: null, 1: [9, 17], 2: [9, 17], 3: null, 4: [9, 17], 5: [9, 17], 6: [9, 17] };
   var WEEKDAYS = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
   function manilaNow() {
@@ -74,7 +74,7 @@
     var detail = document.querySelector('[data-status-detail]');
     if (label && detail) {
       label.textContent = openNow ? 'Open now' : 'Clinic hours';
-      detail.textContent = openNow ? 'Until 5:00 PM today' : 'Mon–Thu & Sat, 9–5';
+      detail.textContent = openNow ? 'Until 5:00 PM today' : 'Mon, Tue & Thu–Sat, 9–5';
     }
   }
 
